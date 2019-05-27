@@ -2,7 +2,7 @@ name := "play-hocon-i18n"
 
 organization := "com.github.marcospereira"
 
-scalaVersion := "2.12.2"
+scalaVersion := "2.12.8"
 
 crossScalaVersions := Seq("2.11.11", "2.12.2")
 

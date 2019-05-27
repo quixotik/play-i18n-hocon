@@ -18,9 +18,8 @@ class HoconMessagesApiProvider @Inject() (
   environment: Environment,
   config: Configuration,
   langs: Langs,
-  httpConfiguration: HttpConfiguration
-)
-    extends DefaultMessagesApiProvider(environment, config, langs, httpConfiguration) {
+  httpConfiguration: HttpConfiguration)
+  extends DefaultMessagesApiProvider(environment, config, langs, httpConfiguration) {
 
   override lazy val get: MessagesApi = {
     new DefaultMessagesApi(
@@ -29,8 +28,8 @@ class HoconMessagesApiProvider @Inject() (
       langCookieName = langCookieName,
       langCookieSecure = langCookieSecure,
       langCookieHttpOnly = langCookieHttpOnly,
-      httpConfiguration = httpConfiguration
-    )
+      langCookieSameSite = langCookieSameSite,
+      httpConfiguration = httpConfiguration)
   }
 
   override protected def loadMessages(file: String): Map[String, String] = {
@@ -45,8 +44,7 @@ class HoconMessagesApiProvider @Inject() (
       (lang, loadMessages(s"messages.$lang.conf"))
     }.toMap ++ Map(
       "default" -> loadMessages("messages.conf"),
-      "default.play" -> loadMessages("messages.default")
-    )
+      "default.play" -> loadMessages("messages.default"))
   }
 
   override protected def joinPaths(first: Option[String], second: String) = first match {
@@ -98,8 +96,7 @@ class HoconI18nModule extends Module {
       bind[Langs].toProvider[DefaultLangsProvider],
       bind[MessagesApi].toProvider[HoconMessagesApiProvider],
       bind[play.i18n.MessagesApi].toSelf,
-      bind[play.i18n.Langs].toSelf
-    )
+      bind[play.i18n.Langs].toSelf)
   }
 }
 
